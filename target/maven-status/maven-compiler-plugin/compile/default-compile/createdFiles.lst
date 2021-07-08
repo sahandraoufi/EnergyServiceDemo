@@ -1,0 +1,16 @@
+com/spectrum/energyservice/energy/EnergyController$SortField.class
+com/spectrum/energyservice/EnergyserviceApplication.class
+com/spectrum/energyservice/energy/Date.class
+com/spectrum/energyservice/energy/Release$ReleaseBuilder.class
+com/spectrum/energyservice/energy/Date$DateBuilder.class
+com/spectrum/energyservice/energy/Release.class
+com/spectrum/energyservice/energy/Permission$PermissionBuilder.class
+com/spectrum/energyservice/energy/Permission.class
+com/spectrum/energyservice/energy/EnergyService.class
+com/spectrum/energyservice/energy/License.class
+com/spectrum/energyservice/energy/Organization$OrganizationBuilder.class
+com/spectrum/energyservice/energy/License$LicenseBuilder.class
+com/spectrum/energyservice/energy/EnergyInput$EnergyInputBuilder.class
+com/spectrum/energyservice/energy/EnergyController.class
+com/spectrum/energyservice/energy/EnergyInput.class
+com/spectrum/energyservice/energy/Organization.class
