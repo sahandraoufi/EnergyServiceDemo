@@ -22,20 +22,27 @@ public class EnergyController {
 
     private final EnergyService energyService;
 
-    enum SortField{
+    public enum SortField {
         ORGANIZATION,
         RELEASE_COUNT,
         TOTAL_LABOR_HOURS,
         NONE
     }
 
+    public enum SortType {
+        ASCENDING,
+        DESCENDING
+    }
+
     @GetMapping("/organizations")
-    public List<Organization> organizations(@RequestParam(name = "sortField") SortField sortField) {
-        return energyService.getOrganizations(sortField);
+    public List<Organization> organizations(@RequestParam(name = "sortField") SortField sortField,
+                                            @RequestParam(name = "sortType") SortType sortType) {
+        return energyService.getOrganizations(sortField, sortType);
     }
 
     @GetMapping(value = "/organizations-csv", produces = "text/csv")
-    public ResponseEntity<Resource> organizationsCsv(@RequestParam(name = "sortField") SortField sortField) {
+    public ResponseEntity<Resource> organizationsCsv(@RequestParam(name = "sortField") SortField sortField,
+                                                     @RequestParam(name = "sortType") SortType sortType) {
         String[] csvHeader = {
                 "organization", "release_count", "total_labor_hours", "all_in_production", "licenses", "most_active_months"
         };
@@ -48,9 +55,9 @@ public class EnergyController {
                         CSVFormat.DEFAULT.withHeader(csvHeader)
                 )
         ) {
-            List<Organization> organizations = energyService.getOrganizations(sortField);
+            List<Organization> organizations = energyService.getOrganizations(sortField, sortType);
             List<List<Object>> csvBody = new ArrayList<>();
-            for(Organization organization : organizations){
+            for (Organization organization : organizations) {
                 csvBody.add(Arrays.asList(organization.getOrganization(), organization.getRelease_count(),
                         organization.getTotal_labor_hours(), organization.isAll_in_production(), organization.getLicenses(),
                         organization.getMost_active_months()));

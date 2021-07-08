@@ -13,7 +13,7 @@ public class EnergyService {
 
     private final static String url = "https://www.energy.gov/sites/prod/files/2020/12/f81/code-12-15-2020.json";
 
-    public List<Organization> getOrganizations(EnergyController.SortField sortField) {
+    public List<Organization> getOrganizations(EnergyController.SortField sortField, EnergyController.SortType sortType) {
 
         ObjectMapper mapper = new ObjectMapper();
         HashMap<String, Organization> organizationHashMap = new HashMap<>();
@@ -46,7 +46,39 @@ public class EnergyService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new ArrayList<>(organizationHashMap.values());
+
+        //sorting the result based on selected field and selected type(ASCENDING or DESCENDING)
+        switch (sortField) {
+            case NONE:
+                return new ArrayList<>(organizationHashMap.values());
+            case ORGANIZATION:
+                if (sortType.equals(EnergyController.SortType.ASCENDING)) {
+                    return organizationHashMap.values().stream().sorted(Comparator.comparing(Organization::getOrganization))
+                            .collect(Collectors.toList());
+                } else {
+                    return organizationHashMap.values().stream().sorted(Comparator.comparing(Organization::getOrganization).reversed())
+                            .collect(Collectors.toList());
+                }
+            case RELEASE_COUNT:
+                if (sortType.equals(EnergyController.SortType.ASCENDING)) {
+                    return organizationHashMap.values().stream().sorted(Comparator.comparing(Organization::getRelease_count).reversed())
+                            .collect(Collectors.toList());
+                } else {
+                    return organizationHashMap.values().stream().sorted(Comparator.comparing(Organization::getRelease_count))
+                            .collect(Collectors.toList());
+                }
+            case TOTAL_LABOR_HOURS:
+                if (sortType.equals(EnergyController.SortType.ASCENDING)) {
+                    return organizationHashMap.values().stream().sorted(Comparator.comparing(Organization::getTotal_labor_hours).reversed())
+                            .collect(Collectors.toList());
+                } else {
+                    return organizationHashMap.values().stream().sorted(Comparator.comparing(Organization::getTotal_labor_hours))
+                            .collect(Collectors.toList());
+                }
+            default:
+                return new ArrayList<>();
+        }
+
     }
 
 }
